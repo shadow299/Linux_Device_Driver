@@ -12,6 +12,10 @@ module_param(data, charp, 0644);
 static int __init hello_init(void)
 {
     printk("Module loaded with integer value %d and string value %s\n", count, data);
+    // log levels
+    pr_info("this is info\n");
+    pr_warn("this is warning\n");
+    pr_err("this is error\n");
     return 0;
 }
 
