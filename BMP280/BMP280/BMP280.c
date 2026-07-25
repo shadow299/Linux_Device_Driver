@@ -227,7 +227,7 @@ static int bmp280_create_char_device(struct bmp280_device *dev)
         return ret;
     }
 
-    dev->class = class_create(THIS_MODULE, driver_name);
+    dev->class = class_create(driver_name);
     if (IS_ERR(dev->class))
     {
         ret = PTR_ERR(dev->class);
@@ -266,8 +266,7 @@ static int bmp280_create_char_device(struct bmp280_device *dev)
  * I2C probe callback. This is called when the kernel finds a matching BMP280.
  * The parameter client represents the I2C device that was detected.
  */
-static int bmp280_probe(struct i2c_client *client,
-                        const struct i2c_device_id *id)
+static int bmp280_probe(struct i2c_client *client)
 {
     int ret;
 
@@ -284,11 +283,10 @@ static int bmp280_probe(struct i2c_client *client,
     return 0;
 }
 
-static int bmp280_remove(struct i2c_client *client)
+static void bmp280_remove(struct i2c_client *client)
 {
     bmp280_dev.client = NULL;
     bmp280_dev.ready = false;
-    return 0;
 }
 
 static const struct i2c_device_id bmp280_id_table[] = {
